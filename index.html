@@ -837,6 +837,28 @@ html.dark {
     .share-button.primary { background: #FF6B8A; color: #FFFFFF; }
     .share-button.secondary { background: #FFFFFF; color: #333333; }
     .share-status { min-height: 20px; text-align: center; color: #666666; font-size: 13px; }
+    .wechat-share-guide {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      background: rgba(0, 0, 0, .78);
+      color: #FFFFFF;
+      padding: 22px;
+    }
+    .wechat-share-guide.active { display: block; }
+    .wechat-share-arrow { text-align: right; font-size: 42px; line-height: 1; padding-right: 8px; }
+    .wechat-share-copy { max-width: 330px; margin: 14px auto; text-align: center; font-size: 18px; line-height: 1.7; }
+    .wechat-share-close {
+      display: block;
+      margin: 22px auto;
+      padding: 10px 26px;
+      border: 2px solid #FFFFFF;
+      border-radius: 999px;
+      color: #FFFFFF;
+      background: transparent;
+      font: inherit;
+    }
     </style>
 </head>
 <body>
@@ -1226,7 +1248,7 @@ html.dark {
 
         <!-- Time Picker Dropdown (hidden by default) -->
         <div class="time-picker-dropdown" id="time-dropdown" style="display: none;">
-          <div class="time-picker-header">选择时间...</div>
+          <div class="time-picker-header">24 小时制 · 每 30 分钟</div>
           <div class="time-slots" id="time-slots"></div>
         </div>
       </div>
@@ -1294,8 +1316,17 @@ html.dark {
   </div>
   <!-- /page-confirm -->
 
+  <div class="wechat-share-guide" id="wechat-share-guide" role="dialog" aria-modal="true">
+    <div class="wechat-share-arrow">↗</div>
+    <div class="wechat-share-copy">
+      <strong>约会结果已经放进链接</strong><br>
+      请点击右上角「…」<br>再选择「转发给朋友」
+    </div>
+    <button class="wechat-share-close" type="button" onclick="closeWechatShareGuide()">知道了</button>
+  </div>
+
   <!-- Shared App Logic -->
-  <script src="app.js?v=3"></script>
+  <script src="app-v4.js"></script>
 
   <!-- Calendar picker toggle (supplements app.js) -->
   <script>
