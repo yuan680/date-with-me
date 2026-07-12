@@ -189,6 +189,22 @@ function clearDate() {
 }
 
 // ── 时间选择 ──
+function renderTimeSlots() {
+  const container = document.getElementById('time-slots');
+  if (!container || container.children.length) return;
+
+  for (let hour = 0; hour < 24; hour++) {
+    for (const minute of [0, 30]) {
+      const time = `${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')}`;
+      const slot = document.createElement('div');
+      slot.className = 'time-slot';
+      slot.textContent = time;
+      slot.addEventListener('click', () => selectTime(time, slot));
+      container.appendChild(slot);
+    }
+  }
+}
+
 function toggleTimePicker() {
   const dropdown = document.getElementById('time-dropdown');
   if (!dropdown) return;
@@ -368,6 +384,7 @@ function initApp() {
 
   // 初始化日历
   renderCalendar();
+  renderTimeSlots();
 
   // 绑定日历导航
   const prevBtn = document.getElementById('cal-prev');
