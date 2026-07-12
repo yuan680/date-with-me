@@ -811,6 +811,32 @@ html.dark {
     .hearts-row span:nth-child(5) { font-size: 14px; }
     .hearts-row span:nth-child(6) { font-size: 11px; }
     .hearts-row span:nth-child(7) { font-size: 13px; }
+
+    .share-actions {
+      width: 100%;
+      display: grid;
+      gap: 10px;
+      margin-top: 24px;
+    }
+
+    .share-button {
+      width: 100%;
+      min-height: 48px;
+      border: 2px solid #1A1A1A;
+      border-radius: 14px;
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 3px 3px 0 #000000;
+      transition: transform .15s ease, box-shadow .15s ease;
+    }
+
+    .share-button:hover { transform: translateY(-2px); box-shadow: 5px 5px 0 #000000; }
+    .share-button:active { transform: translateY(1px); box-shadow: 1px 1px 0 #000000; }
+    .share-button.primary { background: #FF6B8A; color: #FFFFFF; }
+    .share-button.secondary { background: #FFFFFF; color: #333333; }
+    .share-status { min-height: 20px; text-align: center; color: #666666; font-size: 13px; }
     </style>
 </head>
 <body>
@@ -1255,6 +1281,12 @@ html.dark {
           <span class="card-label">MENU</span>
           <span class="card-value" id="confirm-food">火锅</span>
         </div>
+      </div>
+
+      <div class="share-actions">
+        <button class="share-button primary" type="button" onclick="shareDateResult()">分享给 TA 💌</button>
+        <button class="share-button secondary" type="button" onclick="copyDateResult()">复制约会信息</button>
+        <p class="share-status" id="share-status" role="status" aria-live="polite"></p>
       </div>
 
       <!-- Bottom Hearts -->

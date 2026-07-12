@@ -262,6 +262,63 @@ function updateConfirmPage() {
   }
 }
 
+function getDateResultText() {
+  const dateStr = localStorage.getItem('dating_selectedDate') || AppState.selectedDate;
+  const timeStr = localStorage.getItem('dating_selectedTime') || AppState.selectedTime;
+  const foodStr = localStorage.getItem('dating_selectedFood') || AppState.selectedFood;
+  if (!dateStr || !timeStr || !foodStr) return '';
+  return `我接受约会啦 💕\n日期：${formatDisplayDate(dateStr)}\n时间：${timeStr}\n想吃：${foodStr}`;
+}
+
+function showShareStatus(message) {
+  const status = document.getElementById('share-status');
+  if (status) status.textContent = message;
+}
+
+async function copyDateResult() {
+  const text = getDateResultText();
+  if (!text) {
+    showShareStatus('请先完成日期、时间和餐食选择');
+    return false;
+  }
+  try {
+    await navigator.clipboard.writeText(text);
+  } catch (_) {
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    textarea.style.position = 'fixed';
+    textarea.style.opacity = '0';
+    document.body.appendChild(textarea);
+    textarea.select();
+    const copied = document.execCommand('copy');
+    textarea.remove();
+    if (!copied) {
+      showShareStatus('复制失败，请长按上方内容手动复制');
+      return false;
+    }
+  }
+  showShareStatus('已复制，可以粘贴发给 TA 啦 ✓');
+  return true;
+}
+
+async function shareDateResult() {
+  const text = getDateResultText();
+  if (!text) {
+    showShareStatus('请先完成日期、时间和餐食选择');
+    return;
+  }
+  if (navigator.share) {
+    try {
+      await navigator.share({ title: '我们的约会安排', text });
+      showShareStatus('分享成功 ✓');
+      return;
+    } catch (error) {
+      if (error && error.name === 'AbortError') return;
+    }
+  }
+  await copyDateResult();
+}
+
 // ── "不要"按钮的趣味交互 ──
 let noBtnStep = 0;
 const noBtnTexts = ['不要 🦶', '求求你了~', '点不到吧🤭', '再想想呗😔'];
